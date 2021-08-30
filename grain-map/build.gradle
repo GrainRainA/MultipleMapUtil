@@ -60,5 +60,6 @@ dependencies {
     implementation 'org.osmdroid:osmdroid-android:6.1.8'
 
     //GrainRain 工具类
-    implementation 'com.github.GrainRainA:utils-android:1.0.2.210722_alpha'
+//    implementation 'com.github.GrainRainA:utils-android:1.0.5'
+    implementation 'com.github.GrainRainA:utils-android:1.0.6'
 }

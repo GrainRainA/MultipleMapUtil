@@ -10,6 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // 开启 Dex 分包
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -28,4 +31,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation project(path: ':grain-map')
+
+    //dex拆包
+    api 'com.android.support:multidex:1.0.3'
 }

@@ -2,11 +2,9 @@ package com.grain.maputil;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
-
 import com.grain.map.MapView;
-import com.grain.utils.MQTTManager;
-import com.grain.utils.hint.L;
 
 public class MainActivity extends AppCompatActivity {
 
