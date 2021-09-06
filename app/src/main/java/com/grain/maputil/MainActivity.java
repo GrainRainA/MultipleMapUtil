@@ -13,8 +13,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        MapView mapView = findViewById(R.id.mapView);
-//        new MapShowUtil(this, mapView);
+        MapView mapView = findViewById(R.id.mapView);
+        new MapShowUtil(this, mapView);
 
     }
 }

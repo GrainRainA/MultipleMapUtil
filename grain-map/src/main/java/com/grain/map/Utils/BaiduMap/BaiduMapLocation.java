@@ -29,7 +29,6 @@ public class BaiduMapLocation {
     private static float oldRadius;
 
     public BaiduMapLocation() {
-
         //全局只初始化一个locationService
         locationService = new BaiduMapLocationService(getActivity());
         locationService.registerListener(listener);
@@ -43,6 +42,7 @@ public class BaiduMapLocation {
         new DirectionSensor(new DirectionSensorListener() {
             @Override
             public void onSensorChanged(float x, float y, float z) {
+                L.e(x,y,z);
                 if(oldLatLng != null && Math.abs(oldDirection - x) > 1) {
                     MapView.getLocationListener().onReceiveLocation(oldLatLng, Math.abs(x - 360), oldRadius);
                     oldDirection = x;
@@ -55,7 +55,6 @@ public class BaiduMapLocation {
         @Override
         public void onReceiveLocation(BDLocation location) {
 
-            // TODO Auto-generated method stub
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
 
                 StringBuffer sb = new StringBuffer(256);

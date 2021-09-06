@@ -146,7 +146,10 @@ public class ShowLocationUtil {
     public static void showDeviceConnect(MapView map, boolean isShow) {
         if (isShow) {
             if(deviceConnectPolyline != null) deviceConnectPolyline.remove();
-            deviceConnectPolyline = map.addPolyline(Color.WHITE, true, lastDeviceLatLng, lastRemoteControlLatLng);
+            if (lastDeviceLatLng != null && lastDeviceLatLng.latitude != 0 & lastDeviceLatLng.longitude != 0 &&
+                    lastRemoteControlLatLng != null && lastRemoteControlLatLng.latitude != 0 && lastRemoteControlLatLng.longitude != 0) {
+                deviceConnectPolyline = map.addPolyline(Color.WHITE, true, lastDeviceLatLng, lastRemoteControlLatLng);
+            }
         }
     }
 }

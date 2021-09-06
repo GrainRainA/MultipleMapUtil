@@ -25,7 +25,7 @@ public class MapShowUtil {
         InitMapModule.init(activity);
 
         MapParameter mapParameter = new MapParameter.Builder()
-                .mapSource(MapView.MAP_SOURCE_TENCENT)
+                .mapSource(MapView.MAP_SOURCE_BAIDU)
                 .mapType(MapView.MAP_TYPE_SATELLITE)
                 .zoom(16)
                 .camearLatLng(new LatLng(30.8602733, 118.796859, CoordinateSystemType.WGS84))
@@ -41,7 +41,7 @@ public class MapShowUtil {
 
     private void initMap(final MapView mapView) {
 
-        if (mapView == null) return;
+//        if (mapView == null) return;
 
 //        mapView.switchMapSource(MapView.MAP_SOURCE_AMAP, new SwitchMapSourceListener() {
 //            @Override
@@ -61,6 +61,7 @@ public class MapShowUtil {
         mapView.setLocationListener(new LocationListener() {
             @Override
             public void onReceiveLocation(LatLng latLng, float direction, float radius) {
+                // TODO: 2021/9/6 设备连线需要对坐标判空
                 ShowLocationUtil.remoteControl(mapView, latLng, true);
 //                ShowLocationUtil.device(map, deviceLatLng, rotateAngle, true, 1);
             }
