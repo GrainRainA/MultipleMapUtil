@@ -5,9 +5,11 @@ import com.grain.map.Common.MapParameter;
 import com.grain.map.Entity.LatLng;
 import com.grain.map.InitMapModule;
 import com.grain.map.Interfaces.LocationListener;
+import com.grain.map.Interfaces.SwitchMapSourceListener;
 import com.grain.map.Listener.MapLoadingFinishedListener;
 import com.grain.map.MapView;
 import com.grain.map.View.ShowLocationUtil;
+import com.grain.utils.hint.L;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,7 +43,7 @@ public class MapShowUtil {
 
     private void initMap(final MapView mapView) {
 
-//        if (mapView == null) return;
+        if (mapView == null) return;
 
 //        mapView.switchMapSource(MapView.MAP_SOURCE_AMAP, new SwitchMapSourceListener() {
 //            @Override
@@ -53,7 +55,7 @@ public class MapShowUtil {
         mapView.setOnMapClickListener(new MapView.OnMapClickListener() {
             @Override
             public void onClick(LatLng latLng) {
-
+                mapView.addNumberMarker(latLng, 0);
             }
         });
 
@@ -61,7 +63,7 @@ public class MapShowUtil {
         mapView.setLocationListener(new LocationListener() {
             @Override
             public void onReceiveLocation(LatLng latLng, float direction, float radius) {
-                // TODO: 2021/9/6 设备连线需要对坐标判空
+
                 ShowLocationUtil.remoteControl(mapView, latLng, true);
 //                ShowLocationUtil.device(map, deviceLatLng, rotateAngle, true, 1);
             }

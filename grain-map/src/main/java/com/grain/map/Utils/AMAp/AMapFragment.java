@@ -1,5 +1,6 @@
 package com.grain.map.Utils.AMAp;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.model.BitmapDescriptor;
+import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
@@ -102,14 +104,14 @@ public class AMapFragment extends BaseFragment {
         new DirectionSensor(new DirectionSensorListener() {
             @Override
             public void onSensorChanged(float x, float y, float z) {
-                if(oldLatLng != null && Math.abs(oldDirection - x) > 1) {
+                if (oldLatLng != null && Math.abs(oldDirection - x) > 1) {
                     MapView.getLocationListener().onReceiveLocation(oldLatLng, Math.abs(x - 360), oldRadius);
                     oldDirection = x;
                 }
             }
         });
 
-        if(MapView.getSwitchMapSourceListener() != null && com.grain.map.MapView.getCurrentMapSource() == com.grain.map.MapView.MAP_SOURCE_AMAP) {
+        if (MapView.getSwitchMapSourceListener() != null && com.grain.map.MapView.getCurrentMapSource() == com.grain.map.MapView.MAP_SOURCE_AMAP) {
             MapView.getSwitchMapSourceListener().onSuccess();
         }
     }
@@ -122,11 +124,11 @@ public class AMapFragment extends BaseFragment {
             if (location != null) {
                 if (location.getErrorCode() == 0) {
 
-                    if(MapView.getLocationListener() != null) {
+                    if (MapView.getLocationListener() != null) {
                         com.grain.map.Entity.LatLng latLng = new com.grain.map.Entity.LatLng(location.getLatitude(), location.getLongitude(), CoordinateSystemType.GCJ02);
-                        if(latLng.latitude > 10 && latLng.latitude != 0 && latLng.longitude > 10 && latLng.longitude != 0) {
-                            if(oldLatLng != null) {
-                                if(oldLatLng.latitude != latLng.latitude || oldLatLng.longitude != latLng.longitude) {
+                        if (latLng.latitude > 10 && latLng.latitude != 0 && latLng.longitude > 10 && latLng.longitude != 0) {
+                            if (oldLatLng != null) {
+                                if (oldLatLng.latitude != latLng.latitude || oldLatLng.longitude != latLng.longitude) {
 
                                     MapView.getLocationListener().onReceiveLocation(latLng, oldDirection, location.getAccuracy());
                                     oldLatLng = latLng;
@@ -196,6 +198,18 @@ public class AMapFragment extends BaseFragment {
      */
     public static float getMapZoom() {
         return aMap.getCameraPosition().zoom;
+    }
+
+    /**
+     * 添加Marker
+     * @param myLatLng
+     * @param bitmap
+     * @param draggable
+     * @param rotateAngle
+     * @return
+     */
+    public static Marker addMarker(com.grain.map.Entity.LatLng myLatLng, Bitmap bitmap, boolean draggable, float rotateAngle) {
+        return addMarker(myLatLng, BitmapDescriptorFactory.fromBitmap(bitmap), draggable, rotateAngle);
     }
 
     /**

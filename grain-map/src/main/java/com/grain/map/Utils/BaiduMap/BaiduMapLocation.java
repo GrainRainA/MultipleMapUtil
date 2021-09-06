@@ -42,7 +42,6 @@ public class BaiduMapLocation {
         new DirectionSensor(new DirectionSensorListener() {
             @Override
             public void onSensorChanged(float x, float y, float z) {
-                L.e(x,y,z);
                 if(oldLatLng != null && Math.abs(oldDirection - x) > 1) {
                     MapView.getLocationListener().onReceiveLocation(oldLatLng, Math.abs(x - 360), oldRadius);
                     oldDirection = x;

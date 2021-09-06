@@ -1,5 +1,6 @@
 package com.grain.map.Utils.AMAp;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.amap.api.maps2d.model.BitmapDescriptor;
@@ -8,6 +9,7 @@ import com.amap.api.maps2d.model.Polyline;
 import com.grain.map.Entity.LatLng;
 import com.grain.map.R;
 import com.grain.map.Utils.DrawNumberBitmapUtils;
+import com.grain.map.Utils.DrawableUtils;
 
 import java.util.List;
 
@@ -73,8 +75,18 @@ public class AMap {
      * @return
      */
     public static Marker addMarker(LatLng myLatLng, float rotateAngle) {
-        BitmapDescriptor descriptor = AMapBitmapUtils.drawableToBitmapDescriptor(R.drawable.leading_mark);
-        return AMapFragment.addMarker(myLatLng, descriptor, false, rotateAngle);
+        return addMarker(myLatLng, R.drawable.leading_mark, rotateAngle);
+    }
+
+    /**
+     * 添加Marker
+     * @param myLatLng
+     * @param res
+     * @param rotateAngle
+     * @return
+     */
+    public static Marker addMarker(LatLng myLatLng, int res, float rotateAngle) {
+        return AMapFragment.addMarker(myLatLng, DrawableUtils.drawableToBitmap(res), false, rotateAngle);
     }
 
     /**
@@ -95,8 +107,7 @@ public class AMap {
      * @return
      */
     public static Marker addNumberMarker(LatLng myLatLng, int num, boolean isSelect) {
-        BitmapDescriptor descriptor = AMapBitmapUtils.bitmapToBitmapDescriptor(DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect));
-        return AMapFragment.addMarker(myLatLng, descriptor, false, 0);
+        return AMapFragment.addMarker(myLatLng, DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect), false, 0);
     }
 
     /**

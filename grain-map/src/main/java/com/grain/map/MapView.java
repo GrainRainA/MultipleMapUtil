@@ -99,14 +99,6 @@ public class MapView extends RelativeLayout {
 
     private void initView(Context context) {
         view = LayoutInflater.from(context).inflate(R.layout.map_view_layout, this);
-
-        //设置中心点
-//        initCamearLatLng = new LatLng(23.16556174178367, 113.3408419634118);// 华工北湖 火星
-//        initCamearLatLng = new LatLng(30.882924, 121.895208);//上海海洋大学
-//        initCamearLatLng = new LatLng(33.06647181353547, 120.2157172571325);  //兴化
-//        initCamearLatLng = new LatLng(22.978811, 113.230496);//顺联国际机械城
-//        initCamearLatLng = LatLngConvertUtil.WGS84ToGCJ02(23.0157820, 114.0135556);//顺联国际机械城
-
         switchMapSource(currentMapSource, null);
     }
 

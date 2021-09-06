@@ -1,5 +1,6 @@
 package com.grain.map.Utils.BaiduMap;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -21,6 +23,7 @@ import com.grain.map.Entity.LatLng;
 import com.grain.map.MapView;
 import com.grain.map.R;
 import com.grain.map.Base.BaseFragment;
+import com.grain.map.Utils.DrawNumberBitmapUtils;
 import com.grain.utils.hint.L;
 
 
@@ -142,7 +145,7 @@ public class BaiduMapFragment extends BaseFragment {
      * @param zoom
      */
     public static void moveCamera(LatLng myLatLng, int zoom) {
-        if(baiduMap == null) return;
+        if (baiduMap == null) return;
         MapStatus mapStatus = new MapStatus.Builder()
                 .target(new com.baidu.mapapi.model.LatLng(myLatLng.getLatitude(), myLatLng.getLongitude()))
                 .zoom(zoom)
@@ -182,6 +185,18 @@ public class BaiduMapFragment extends BaseFragment {
         }
 
         return 0;
+    }
+
+    /**
+     * 添加Marker
+     * @param myLatLng
+     * @param bitmap
+     * @param rotateAngle
+     * @param draggable
+     * @return
+     */
+    public static Marker addMarker(LatLng myLatLng, Bitmap bitmap, float rotateAngle, boolean draggable) {
+        return addMarker(myLatLng, BitmapDescriptorFactory.fromBitmap(bitmap), rotateAngle, draggable);
     }
 
     /**

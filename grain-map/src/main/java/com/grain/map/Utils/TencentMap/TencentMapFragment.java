@@ -11,6 +11,7 @@ import com.grain.map.InitMapModule;
 import com.grain.map.R;
 import com.grain.map.Base.BaseFragment;
 import com.grain.utils.Interfaces.DirectionSensorListener;
+import com.grain.utils.hint.L;
 import com.grain.utils.sensor.DirectionSensor;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;

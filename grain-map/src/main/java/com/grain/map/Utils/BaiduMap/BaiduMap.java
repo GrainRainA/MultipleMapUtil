@@ -1,5 +1,6 @@
 package com.grain.map.Utils.BaiduMap;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -87,7 +88,6 @@ public class BaiduMap {
 
         //构建Marker图标
         BitmapDescriptor descriptor = BitmapDescriptorFactory.fromResource(R.drawable.leading_mark);
-
         return BaiduMapFragment.addMarker(myLatLng, descriptor, rotateAngle, draggable);
     }
 
@@ -110,8 +110,8 @@ public class BaiduMap {
      */
     public static Marker addNumberMarker(LatLng myLatLng, int num, boolean isSelect) {
         //构建Marker图标
-        BitmapDescriptor descriptor = BitmapDescriptorFactory.fromBitmap(DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect));
-        return BaiduMapFragment.addMarker(myLatLng, descriptor, 0, false);
+        Bitmap bitmap = DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect);
+        return BaiduMapFragment.addMarker(myLatLng, bitmap, 0, false);
     }
 
     /**

@@ -22,8 +22,8 @@ public class GoogleTileSource extends TileSourceFactory {
 //            "http://mt2.google.cn",
 //            "http://mt3.google.cn",
 //            "http://192.168.12.152:8095/picture/map?",
-//            "http://120.79.6.170:8095/picture/map?",      //生产服务器
-            "http://www.google.cn/maps/vt?lyrs=s@189&gl=cn"  //谷歌无偏
+            "http://120.79.6.170:8095/picture/map?",      //生产服务器
+//            "http://www.google.cn/maps/vt?lyrs=s@189&gl=cn"  //谷歌无偏
 
     }) {
         @Override
@@ -35,16 +35,16 @@ public class GoogleTileSource extends TileSourceFactory {
 //            return "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692881258,153850531&fm=26&gp=0.jpg";
 
             //生产服务器
-//            String url = getBaseUrl() +
-//                    "z=" + MapTileIndex.getZoom(pMapTileIndex)+
-//                    "&x=" + MapTileIndex.getX(pMapTileIndex)+
-//                    "&y=" + MapTileIndex.getY(pMapTileIndex);
+            String url = getBaseUrl() +
+                    "z=" + MapTileIndex.getZoom(pMapTileIndex)+
+                    "&x=" + MapTileIndex.getX(pMapTileIndex)+
+                    "&y=" + MapTileIndex.getY(pMapTileIndex);
 
             //谷歌无偏
-            String url = getBaseUrl() +
-                    "&x=" + MapTileIndex.getX(pMapTileIndex) +
-                    "&y=" + MapTileIndex.getY(pMapTileIndex) +
-                    "&z=" + MapTileIndex.getZoom(pMapTileIndex);
+//            String url = getBaseUrl() +
+//                    "&x=" + MapTileIndex.getX(pMapTileIndex) +
+//                    "&y=" + MapTileIndex.getY(pMapTileIndex) +
+//                    "&z=" + MapTileIndex.getZoom(pMapTileIndex);
 
             Log.e("url", url);
             return url;
