@@ -1,5 +1,6 @@
 package com.grain.map.Utils.GoogleMap;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -194,17 +195,18 @@ public class GoogleMapFragment extends BaseFragment {
      *
      * @param myLatLng
      * @param bitmap
-     * @param draggable 设置可拖动
      * @return
      */
-    public static Marker addMarker(LatLng myLatLng, BitmapDrawable bitmap, float rotateAngle, boolean draggable) {
+    public static Marker addMarker(LatLng myLatLng, Bitmap bitmap, float rotateAngle) {
         if (map != null) {
+            BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
             GeoPoint point = new GeoPoint(myLatLng.getLatitude(), myLatLng.getLongitude());
             Marker marker = new Marker(map);
+
             marker.setPosition(point);
             marker.setAnchor(Marker.ANCHOR_BOTTOM, Marker.ANCHOR_BOTTOM);
             marker.setRotation(rotateAngle);
-            marker.setIcon(bitmap);
+            marker.setIcon(bitmapDrawable);
             marker.setOnMarkerClickListener(null);
 
             map.getOverlays().add(marker);

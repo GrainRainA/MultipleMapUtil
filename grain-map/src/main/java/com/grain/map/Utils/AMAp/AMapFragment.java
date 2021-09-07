@@ -37,7 +37,6 @@ import static com.grain.map.MapView.MAP_TYPE_NORMAL;
 import static com.grain.map.MapView.MAP_TYPE_SATELLITE;
 import static com.grain.map.MapView.setCurrentMapType;
 
-
 /**
  * @anthor GrainRain
  * @funcation 显示高德地图的Fragment
@@ -49,6 +48,7 @@ public class AMapFragment extends BaseFragment {
 
     //高德地图
     private static com.amap.api.maps2d.MapView aMapView;
+
     private static AMap aMap;
 
     //定位
@@ -72,7 +72,7 @@ public class AMapFragment extends BaseFragment {
         aMapView = view.findViewById(R.id.amap_view);
         aMapView.onCreate(savedInstanceState);
         aMap = aMapView.getMap();
-        aMap.getUiSettings().setZoomControlsEnabled(false);
+        aMap.getUiSettings().setZoomControlsEnabled(true);
 
         //设置地图类型
         setMapType(com.grain.map.MapView.getCurrentMapType());

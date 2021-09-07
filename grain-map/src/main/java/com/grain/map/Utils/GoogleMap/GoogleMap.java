@@ -62,36 +62,17 @@ public class GoogleMap {
         return (float) getMap().getZoomLevelDouble();
     }
 
-    /**
-     * 添加Marker
-     * @param myLatLng 坐标
-     * @return
-     */
+
     public static Marker addMarker(LatLng myLatLng) {
-        return GoogleMap.addMarker(myLatLng, 0);
+        return addMarker(myLatLng, 0);
     }
 
-    /**
-     * 添加Marker
-     * @param myLatLng 坐标
-     * @param rotateAngle 角度
-     * @return
-     */
     public static Marker addMarker(LatLng myLatLng, float rotateAngle) {
-        return GoogleMap.addMarker(myLatLng, rotateAngle, R.drawable.leading_mark);
+        return addMarker(myLatLng, R.drawable.leading_mark, rotateAngle);
     }
 
-    /**
-     * 添加Marker
-     * @param myLatLng 坐标
-     * @param rotateAngle 角度
-     * @param resId 图片资源ID
-     * @return
-     */
-    public static Marker addMarker(LatLng myLatLng, float rotateAngle, int resId) {
-        Bitmap bitmap = DrawableUtils.drawableToBitmap(resId);
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
-        return GoogleMap.addMarker(myLatLng, bitmapDrawable, rotateAngle, false);
+    public static Marker addMarker(LatLng myLatLng, int res, float rotateAngle) {
+        return addMarker(myLatLng, DrawableUtils.drawableToBitmap(res), rotateAngle);
     }
 
     /**
@@ -99,11 +80,10 @@ public class GoogleMap {
      * @param myLatLng 坐标
      * @param bitmap 图片bitmap
      * @param rotateAngle 角度
-     * @param draggable 是否可拖动
      * @return
      */
-    public static Marker addMarker(LatLng myLatLng, BitmapDrawable bitmap, float rotateAngle, boolean draggable) {
-        return GoogleMapFragment.addMarker(myLatLng, bitmap, rotateAngle, draggable);
+    public static Marker addMarker(LatLng myLatLng, Bitmap bitmap, float rotateAngle) {
+        return GoogleMapFragment.addMarker(myLatLng, bitmap, rotateAngle);
     }
 
     /**
@@ -113,7 +93,7 @@ public class GoogleMap {
      * @return
      */
     public static Marker addNumberMarker(LatLng myLatLng, int num) {
-        return addNumberMarker(myLatLng, num, false);
+        return addNumberMarker(myLatLng, num);
     }
 
     /**
@@ -125,8 +105,7 @@ public class GoogleMap {
      */
     public static Marker addNumberMarker(LatLng myLatLng, int num, boolean isSelect) {
         Bitmap bitmap = DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect);
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(bitmap);
-        return GoogleMap.addMarker(myLatLng, bitmapDrawable, 0, false);
+        return addMarker(myLatLng, bitmap, 0);
     }
 
     /**

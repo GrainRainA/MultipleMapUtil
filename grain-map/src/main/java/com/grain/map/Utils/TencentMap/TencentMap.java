@@ -1,10 +1,12 @@
 package com.grain.map.Utils.TencentMap;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.grain.map.Entity.LatLng;
 import com.grain.map.R;
 import com.grain.map.Utils.DrawNumberBitmapUtils;
+import com.grain.map.Utils.DrawableUtils;
 import com.tencent.tencentmap.mapsdk.maps.model.BitmapDescriptor;
 import com.tencent.tencentmap.mapsdk.maps.model.Marker;
 import com.tencent.tencentmap.mapsdk.maps.model.Polyline;
@@ -57,35 +59,21 @@ public class TencentMap {
         return TencentMapFragment.getMapZoom();
     }
 
-    /**
-     * 添加Marker
-     * @param myLatLng
-     * @return
-     */
+
     public static Marker addMarker(LatLng myLatLng) {
-        return TencentMap.addMarker(myLatLng, 0);
+        return addMarker(myLatLng, 0);
     }
 
-    /**
-     * 添加Marker
-     * @param myLatLng
-     * @param rotateAngle
-     * @return
-     */
     public static Marker addMarker(LatLng myLatLng, float rotateAngle) {
-        return TencentMap.addMarker(myLatLng, rotateAngle, false);
+        return addMarker(myLatLng, R.drawable.leading_mark, rotateAngle);
     }
 
-    /**
-     * 添加Marker
-     * @param myLatLng
-     * @param rotateAngle
-     * @param draggable
-     * @return
-     */
-    public static Marker addMarker(LatLng myLatLng, float rotateAngle, boolean draggable) {
-        BitmapDescriptor descriptor = TencentMapBitmapUtils.drawableToBitmapDescriptor(R.drawable.leading_mark);
-        return addMarker(myLatLng, descriptor, rotateAngle, draggable);
+    public static Marker addMarker(LatLng myLatLng, int res, float rotateAngle) {
+        return addMarker(myLatLng, DrawableUtils.drawableToBitmap(res), rotateAngle);
+    }
+
+    public static Marker addMarker(LatLng myLatLng, Bitmap bitmap, float rotateAngle) {
+        return TencentMapFragment.addMarker(myLatLng, bitmap, rotateAngle);
     }
 
     /**
@@ -106,20 +94,9 @@ public class TencentMap {
      * @return
      */
     public static Marker addNumberMarker(LatLng myLatLng, int num, boolean isSelect) {
-        BitmapDescriptor descriptor = TencentMapBitmapUtils.bitmapToBitmapDescriptor(DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect));
-        return addMarker(myLatLng, descriptor, 0, false);
-    }
-
-    /**
-     * 添加Marker
-     * @param myLatLng
-     * @param bitmap
-     * @param rotateAngle
-     * @param draggable
-     * @return
-     */
-    public static Marker addMarker(LatLng myLatLng, BitmapDescriptor bitmap, float rotateAngle, boolean draggable) {
-        return TencentMapFragment.addMarker(myLatLng, bitmap, rotateAngle, draggable);
+        //构建Marker图标
+        Bitmap bitmap = DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect);
+        return addMarker(myLatLng, bitmap, 0);
     }
 
     /**

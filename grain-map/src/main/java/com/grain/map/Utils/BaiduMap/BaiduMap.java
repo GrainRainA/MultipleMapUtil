@@ -10,6 +10,7 @@ import com.baidu.mapapi.map.Polyline;
 import com.grain.map.Entity.LatLng;
 import com.grain.map.R;
 import com.grain.map.Utils.DrawNumberBitmapUtils;
+import com.grain.map.Utils.DrawableUtils;
 
 import java.util.List;
 
@@ -59,36 +60,28 @@ public class BaiduMap {
         return BaiduMapFragment.getMapZoom();
     }
 
-    /**
-     * 添加Marker
-     * @param myLatLng
-     * @return
-     */
+
     public static Marker addMarker(LatLng myLatLng) {
-        return addMarker(myLatLng, 0, false);
+        return addMarker(myLatLng, 0);
+    }
+
+    public static Marker addMarker(LatLng myLatLng, float rotateAngle) {
+        return addMarker(myLatLng, R.drawable.leading_mark, rotateAngle);
+    }
+
+    public static Marker addMarker(LatLng myLatLng, int res, float rotateAngle) {
+        return addMarker(myLatLng, DrawableUtils.drawableToBitmap(res), rotateAngle);
     }
 
     /**
      * 添加Marker
      * @param myLatLng
+     * @param bitmap
      * @param rotateAngle
      * @return
      */
-    public static Marker addMarker(LatLng myLatLng, float rotateAngle) {
-        return addMarker(myLatLng, rotateAngle, false);
-    }
-
-    /**
-     * 添加Marker
-     * @param myLatLng
-     * @param draggable 设置可拖动
-     * @return
-     */
-    public static Marker addMarker(LatLng myLatLng, float rotateAngle, boolean draggable) {
-
-        //构建Marker图标
-        BitmapDescriptor descriptor = BitmapDescriptorFactory.fromResource(R.drawable.leading_mark);
-        return BaiduMapFragment.addMarker(myLatLng, descriptor, rotateAngle, draggable);
+    public static Marker addMarker(LatLng myLatLng, Bitmap bitmap, float rotateAngle) {
+        return BaiduMapFragment.addMarker(myLatLng, bitmap, rotateAngle);
     }
 
     /**
@@ -111,7 +104,7 @@ public class BaiduMap {
     public static Marker addNumberMarker(LatLng myLatLng, int num, boolean isSelect) {
         //构建Marker图标
         Bitmap bitmap = DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect);
-        return BaiduMapFragment.addMarker(myLatLng, bitmap, 0, false);
+        return addMarker(myLatLng, bitmap, 0);
     }
 
     /**

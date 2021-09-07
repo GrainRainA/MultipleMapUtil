@@ -192,22 +192,11 @@ public class BaiduMapFragment extends BaseFragment {
      * @param myLatLng
      * @param bitmap
      * @param rotateAngle
-     * @param draggable
      * @return
      */
-    public static Marker addMarker(LatLng myLatLng, Bitmap bitmap, float rotateAngle, boolean draggable) {
-        return addMarker(myLatLng, BitmapDescriptorFactory.fromBitmap(bitmap), rotateAngle, draggable);
-    }
+    public static Marker addMarker(LatLng myLatLng, Bitmap bitmap, float rotateAngle) {
 
-    /**
-     * 添加Marker
-     *
-     * @param myLatLng
-     * @param bitmap
-     * @param draggable 设置可拖动
-     * @return
-     */
-    public static Marker addMarker(LatLng myLatLng, BitmapDescriptor bitmap, float rotateAngle, boolean draggable) {
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(bitmap);
 
         if (baiduMap != null && myLatLng != null) {
             com.baidu.mapapi.model.LatLng latLng = new com.baidu.mapapi.model.LatLng(myLatLng.getLatitude(), myLatLng.getLongitude());
@@ -215,8 +204,8 @@ public class BaiduMapFragment extends BaseFragment {
             //构建MarkerOption，用于在地图上添加Marker
             OverlayOptions option = new MarkerOptions()
                     .position(latLng)
-                    .icon(bitmap)
-                    .draggable(draggable)
+                    .icon(bitmapDescriptor)
+                    .draggable(false)
                     .anchor(0.5f, 0.5f);
 
             Overlay overlay = baiduMap.addOverlay(option);

@@ -1,5 +1,6 @@
 package com.grain.map.Utils.TencentMap;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -208,10 +209,11 @@ public class TencentMapFragment extends BaseFragment {
      * 添加Marker
      * @param myLatLng
      * @param bitmap
-     * @param draggable 设置可拖动
      * @return
      */
-    public static Marker addMarker(LatLng myLatLng, BitmapDescriptor bitmap, float rotateAngle, boolean draggable) {
+    public static Marker addMarker(LatLng myLatLng, Bitmap bitmap, float rotateAngle) {
+
+        BitmapDescriptor descriptor = TencentMapBitmapUtils.bitmapToBitmapDescriptor(bitmap);
 
         com.tencent.tencentmap.mapsdk.maps.model.LatLng latLng = new com.tencent.tencentmap.mapsdk.maps.model.LatLng(myLatLng.getLatitude(), myLatLng.getLongitude());
         Marker marker = null;
@@ -219,8 +221,8 @@ public class TencentMapFragment extends BaseFragment {
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(new com.tencent.tencentmap.mapsdk.maps.model.LatLng(latLng.latitude, latLng.longitude))
                 .anchor(0.5f, 0.5f)
-                .icon(bitmap)
-                .draggable(draggable);
+                .icon(descriptor)
+                .draggable(false);
 
         if(markerOptions != null && tencentMap != null) {
             marker = tencentMap.addMarker(markerOptions);

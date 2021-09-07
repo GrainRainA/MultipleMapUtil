@@ -32,8 +32,6 @@ android {
     sourceSets {
         main {
             assets.srcDirs = ['src/main/assets', 'src/main/assets/']
-
-            //百度地图
             jniLibs.srcDir 'libs'
 //            jni.srcDirs = []    //disable automatic ndk-build
         }
@@ -46,6 +44,7 @@ dependencies {
 
     //高德地图
     implementation 'com.amap.api:map2d:latest.integration'          //2D地图
+//    implementation 'com.amap.api:3dmap:latest.integration'         //3D地图
     implementation files('libs/AMap_Location_V5.2.0_20200915.jar')      //定位SDK
 
     //腾讯地图

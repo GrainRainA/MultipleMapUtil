@@ -114,7 +114,7 @@ public class MapView extends RelativeLayout {
     private MapView setMapParameter(final MapParameter mapParameter) {
         if (mapParameter != null) {
 
-            if(mapParameter.camearLatLng != null) {
+            if (mapParameter.camearLatLng != null) {
                 if (mapParameter.camearLatLng.type == CoordinateSystemType.WGS84) {
                     initCamearLatLng = LatLngConvertUtil.WGS84ToGCJ02(mapParameter.camearLatLng);
                 } else if (mapParameter.camearLatLng.type == CoordinateSystemType.GCJ02) {
@@ -139,6 +139,7 @@ public class MapView extends RelativeLayout {
 
     /**
      * 定位信息回调
+     *
      * @param mLocationListener
      * @return
      */
@@ -314,39 +315,39 @@ public class MapView extends RelativeLayout {
         return 0;
     }
 
-    /**
-     * 添加Marker
-     *
-     * @param latLng
-     * @return
-     */
     public Marker addMarker(LatLng latLng) {
         return this.addMarker(latLng, 0);
     }
 
+    public Marker addMarker(LatLng latLng, float rotateAngle) {
+        return addMarker(latLng, R.drawable.leading_mark, rotateAngle);
+    }
+
     /**
      * 添加Marker
-     * 返回自定义Marker
-     *
      * @param latLng
+     * @param res
+     * @param rotateAngle
+     * @return 自定义Marker
      */
-    public Marker addMarker(LatLng latLng, float rotateAngle) {
+    public Marker addMarker(LatLng latLng, int res, float rotateAngle) {
+        //地图显示坐标系为火星坐标系，如传入的坐标类型为WGS84，则进行转换
         LatLng newLatLng = latLng;
-        if(latLng.getType() != null) {
-            if(latLng.getType() == CoordinateSystemType.WGS84) {
+        if (latLng.getType() != null) {
+            if (latLng.getType() == CoordinateSystemType.WGS84) {
                 newLatLng = LatLngConvertUtil.WGS84ToGCJ02(latLng.latitude, latLng.longitude);
             }
         }
 
         switch (currentMapSource) {
             case MAP_SOURCE_AMAP:
-                return new Marker(AMap.addMarker(newLatLng, rotateAngle));
+                return new Marker(AMap.addMarker(newLatLng, res, rotateAngle));
             case MAP_SOURCE_TENCENT:
-                return new Marker(TencentMap.addMarker(newLatLng, rotateAngle));
+                return new Marker(TencentMap.addMarker(newLatLng, res, rotateAngle));
             case MAP_SOURCE_BAIDU:
-                return new Marker(BaiduMap.addMarker(newLatLng, rotateAngle));
+                return new Marker(BaiduMap.addMarker(newLatLng, res, rotateAngle));
             case MAP_SOURCE_GOOGLE:
-                return new Marker(GoogleMap.addMarker(newLatLng, rotateAngle));
+                return new Marker(GoogleMap.addMarker(newLatLng, res, rotateAngle));
         }
         return null;
     }
@@ -468,8 +469,9 @@ public class MapView extends RelativeLayout {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.map_view_framelayout, fragment);
             transaction.commit();
+            L.v("InitMapModule.getActivity() != null");
         } else {
-            L.e("InitMapModule.getActivity() == null");
+            L.v("InitMapModule.getActivity() == null");
         }
     }
 

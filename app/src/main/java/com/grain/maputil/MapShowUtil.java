@@ -27,7 +27,7 @@ public class MapShowUtil {
         InitMapModule.init(activity);
 
         MapParameter mapParameter = new MapParameter.Builder()
-                .mapSource(MapView.MAP_SOURCE_BAIDU)
+                .mapSource(MapView.MAP_SOURCE_AMAP)
                 .mapType(MapView.MAP_TYPE_SATELLITE)
                 .zoom(16)
                 .camearLatLng(new LatLng(30.8602733, 118.796859, CoordinateSystemType.WGS84))
@@ -55,7 +55,7 @@ public class MapShowUtil {
         mapView.setOnMapClickListener(new MapView.OnMapClickListener() {
             @Override
             public void onClick(LatLng latLng) {
-                mapView.addNumberMarker(latLng, 0);
+                mapView.addMarker(latLng, R.drawable.icon_home, 100);
             }
         });
 
