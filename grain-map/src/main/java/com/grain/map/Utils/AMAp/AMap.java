@@ -3,9 +3,8 @@ package com.grain.map.Utils.AMAp;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
-import com.amap.api.maps2d.model.BitmapDescriptor;
-import com.amap.api.maps2d.model.Marker;
-import com.amap.api.maps2d.model.Polyline;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.Polyline;
 import com.grain.map.Entity.LatLng;
 import com.grain.map.R;
 import com.grain.map.Utils.DrawNumberBitmapUtils;
@@ -59,34 +58,28 @@ public class AMap {
         return AMapFragment.getMapZoom();
     }
 
-    /**
-     * 添加Marker
-     * @param myLatLng
-     * @return
-     */
+
     public static Marker addMarker(LatLng myLatLng) {
         return addMarker(myLatLng, 0);
     }
 
-    /**
-     * 添加Marker
-     * @param myLatLng
-     * @param rotateAngle
-     * @return
-     */
     public static Marker addMarker(LatLng myLatLng, float rotateAngle) {
         return addMarker(myLatLng, R.drawable.leading_mark, rotateAngle);
+    }
+
+    public static Marker addMarker(LatLng myLatLng, int res, float rotateAngle) {
+        return addMarker(myLatLng, DrawableUtils.drawableToBitmap(res), rotateAngle);
     }
 
     /**
      * 添加Marker
      * @param myLatLng
-     * @param res
+     * @param bitmap
      * @param rotateAngle
      * @return
      */
-    public static Marker addMarker(LatLng myLatLng, int res, float rotateAngle) {
-        return AMapFragment.addMarker(myLatLng, DrawableUtils.drawableToBitmap(res), false, rotateAngle);
+    public static Marker addMarker(LatLng myLatLng, Bitmap bitmap, float rotateAngle) {
+        return AMapFragment.addMarker(myLatLng, bitmap, rotateAngle);
     }
 
     /**
@@ -107,7 +100,7 @@ public class AMap {
      * @return
      */
     public static Marker addNumberMarker(LatLng myLatLng, int num, boolean isSelect) {
-        return AMapFragment.addMarker(myLatLng, DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect), false, 0);
+        return addMarker(myLatLng, DrawNumberBitmapUtils.getNumberBitmap(50, num, isSelect), 0);
     }
 
     /**

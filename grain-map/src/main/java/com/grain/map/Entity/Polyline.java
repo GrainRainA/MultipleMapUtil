@@ -18,7 +18,7 @@ public class Polyline {
     //  Polyline类型
     private int type = 0;
 
-    private com.amap.api.maps2d.model.Polyline aMapPolyline;
+    private com.amap.api.maps.model.Polyline aMapPolyline;
     private com.baidu.mapapi.map.Polyline baiduPolyline;
     private com.tencent.tencentmap.mapsdk.maps.model.Polyline tencentPolyline;
     private org.osmdroid.views.overlay.Polyline googlePolyline;
@@ -30,7 +30,7 @@ public class Polyline {
      * 创建AMap Polyline
      * @param aMapPolyline
      */
-    public Polyline(com.amap.api.maps2d.model.Polyline aMapPolyline) {
+    public Polyline(com.amap.api.maps.model.Polyline aMapPolyline) {
         type = MAP_SOURCE_AMAP;
         this.aMapPolyline = aMapPolyline;
     }

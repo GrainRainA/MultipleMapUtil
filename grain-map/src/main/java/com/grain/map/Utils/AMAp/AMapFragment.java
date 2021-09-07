@@ -10,16 +10,16 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.model.BitmapDescriptor;
-import com.amap.api.maps2d.model.BitmapDescriptorFactory;
-import com.amap.api.maps2d.model.CameraPosition;
-import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.maps2d.model.Marker;
-import com.amap.api.maps2d.model.MarkerOptions;
-import com.amap.api.maps2d.model.Polyline;
-import com.amap.api.maps2d.model.PolylineOptions;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapFragment;
+import com.amap.api.maps.model.BitmapDescriptor;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.Polyline;
+import com.amap.api.maps.model.PolylineOptions;
 import com.grain.map.Common.CoordinateSystemType;
 import com.grain.map.InitMapModule;
 import com.grain.map.MapView;
@@ -29,9 +29,12 @@ import com.grain.utils.Interfaces.DirectionSensorListener;
 import com.grain.utils.hint.L;
 import com.grain.utils.sensor.DirectionSensor;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import static com.grain.map.MapView.MAP_TYPE_NORMAL;
 import static com.grain.map.MapView.MAP_TYPE_SATELLITE;
@@ -47,9 +50,8 @@ public class AMapFragment extends BaseFragment {
     private View view;
 
     //高德地图
-    private static com.amap.api.maps2d.MapView aMapView;
-
-    private static AMap aMap;
+    private static com.amap.api.maps.TextureMapView aMapView;
+    private static com.amap.api.maps.AMap aMap;
 
     //定位
     private AMapLocationClient locationClient = null;
@@ -71,6 +73,7 @@ public class AMapFragment extends BaseFragment {
     private void initView(Bundle savedInstanceState) {
         aMapView = view.findViewById(R.id.amap_view);
         aMapView.onCreate(savedInstanceState);
+
         aMap = aMapView.getMap();
         aMap.getUiSettings().setZoomControlsEnabled(true);
 
@@ -91,7 +94,7 @@ public class AMapFragment extends BaseFragment {
         //设置中心点
         moveCamera(MapView.getInitCamearLatLng(), MapView.getInitZoom());
 
-        aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
+        aMap.setOnMapClickListener(new com.amap.api.maps.AMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 if (com.grain.map.MapView.getOnMapClickListener() != null) {
@@ -158,10 +161,10 @@ public class AMapFragment extends BaseFragment {
      */
     public static void setMapType(int mapType) {
         if (mapType == MAP_TYPE_SATELLITE) {
-            aMap.setMapType(AMap.MAP_TYPE_SATELLITE);
+            aMap.setMapType(com.amap.api.maps.AMap.MAP_TYPE_SATELLITE);
             setCurrentMapType(MAP_TYPE_SATELLITE);
         } else if (mapType == MAP_TYPE_NORMAL) {
-            aMap.setMapType(AMap.MAP_TYPE_NORMAL);
+            aMap.setMapType(com.amap.api.maps.AMap.MAP_TYPE_NORMAL);
             setCurrentMapType(MAP_TYPE_NORMAL);
         }
     }
@@ -173,7 +176,7 @@ public class AMapFragment extends BaseFragment {
      * @param zoom
      */
     public static void moveCamera(com.grain.map.Entity.LatLng myLatLng, int zoom) {
-        aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new com.amap.api.maps2d.model.LatLng(
+        aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(
                 myLatLng.getLatitude(), myLatLng.getLongitude()), zoom, 0, 0)));
     }
 
@@ -202,14 +205,14 @@ public class AMapFragment extends BaseFragment {
 
     /**
      * 添加Marker
+     *
      * @param myLatLng
      * @param bitmap
-     * @param draggable
      * @param rotateAngle
      * @return
      */
-    public static Marker addMarker(com.grain.map.Entity.LatLng myLatLng, Bitmap bitmap, boolean draggable, float rotateAngle) {
-        return addMarker(myLatLng, BitmapDescriptorFactory.fromBitmap(bitmap), draggable, rotateAngle);
+    public static Marker addMarker(com.grain.map.Entity.LatLng myLatLng, Bitmap bitmap, float rotateAngle) {
+        return addMarker(myLatLng, BitmapDescriptorFactory.fromBitmap(bitmap), rotateAngle);
     }
 
     /**
@@ -217,10 +220,9 @@ public class AMapFragment extends BaseFragment {
      *
      * @param myLatLng
      * @param bitmap
-     * @param draggable 设置可拖动
      * @return
      */
-    public static Marker addMarker(com.grain.map.Entity.LatLng myLatLng, BitmapDescriptor bitmap, boolean draggable, float rotateAngle) {
+    public static Marker addMarker(com.grain.map.Entity.LatLng myLatLng, BitmapDescriptor bitmap, float rotateAngle) {
 
         if (aMap == null) return null;
 
@@ -229,11 +231,10 @@ public class AMapFragment extends BaseFragment {
                 .anchor(0.5f, 0.5f)
                 .position(latLng)
                 .icon(bitmap)
-                .draggable(draggable);
+                .draggable(false);
 
         Marker marker = aMap.addMarker(options);
         marker.setRotateAngle(rotateAngle);
-
         return marker;
     }
 
@@ -275,12 +276,23 @@ public class AMapFragment extends BaseFragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        aMapView.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
+//        aMapView.onDestroy();
     }
 
-    public static AMap getaMap() {
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        aMapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    public static com.amap.api.maps.AMap getaMap() {
         return aMap;
     }
 }

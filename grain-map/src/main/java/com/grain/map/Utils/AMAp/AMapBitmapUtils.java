@@ -3,8 +3,8 @@ package com.grain.map.Utils.AMAp;
 
 import android.graphics.Bitmap;
 
-import com.amap.api.maps2d.model.BitmapDescriptor;
-import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.BitmapDescriptor;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.grain.map.Utils.DrawableUtils;
 
 /**

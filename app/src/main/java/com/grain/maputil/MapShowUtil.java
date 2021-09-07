@@ -8,6 +8,7 @@ import com.grain.map.Interfaces.LocationListener;
 import com.grain.map.Interfaces.SwitchMapSourceListener;
 import com.grain.map.Listener.MapLoadingFinishedListener;
 import com.grain.map.MapView;
+import com.grain.map.Utils.LatLngCalculationDistance;
 import com.grain.map.View.ShowLocationUtil;
 import com.grain.utils.hint.L;
 
@@ -27,7 +28,7 @@ public class MapShowUtil {
         InitMapModule.init(activity);
 
         MapParameter mapParameter = new MapParameter.Builder()
-                .mapSource(MapView.MAP_SOURCE_AMAP)
+                .mapSource(MapView.MAP_SOURCE_BAIDU)
                 .mapType(MapView.MAP_TYPE_SATELLITE)
                 .zoom(16)
                 .camearLatLng(new LatLng(30.8602733, 118.796859, CoordinateSystemType.WGS84))

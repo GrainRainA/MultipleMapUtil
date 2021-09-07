@@ -1,8 +1,7 @@
 package com.grain.map.Utils;
 
-import com.amap.api.maps2d.AMapException;
-import com.amap.api.maps2d.AMapUtils;
 import com.grain.map.Entity.LatLng;
+import com.grain.utils.hint.L;
 
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class LatLngCalculationDistance {
         return CoordinateDistance;
     }
 
-
+    // TODO: 2021/9/7 需要测试算法是否正常
     public static float calculateLineDistance(LatLng var0, LatLng var1) {
         if (var0.longitude == 0 || var0.latitude == 0 || var1.latitude == 0 || var1.longitude == 0) {
             return 0;
@@ -77,12 +76,8 @@ public class LatLngCalculationDistance {
             double var30 = Math.sqrt((var28[0] - var29[0]) * (var28[0] - var29[0]) + (var28[1] - var29[1]) * (var28[1] - var29[1]) + (var28[2] - var29[2]) * (var28[2] - var29[2]));
             return (float)(Math.asin(var30 / 2.0D) * 1.27420015798544E7D);
         } else {
-            try {
-                throw new AMapException("非法坐标值");
-            } catch (AMapException var32) {
-                var32.printStackTrace();
-                return 0.0F;
-            }
+            L.e("坐标转换失败 非法坐标值");
+            return 0.0F;
         }
     }
 }

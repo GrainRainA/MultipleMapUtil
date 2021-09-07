@@ -1,6 +1,6 @@
 package com.grain.map.Utils.AMAp;
 
-import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;

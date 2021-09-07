@@ -18,7 +18,7 @@ public class Marker {
     //  Marker类型
     private static int type = 0;
 
-    private com.amap.api.maps2d.model.Marker aMapMarker;
+    private com.amap.api.maps.model.Marker aMapMarker;
     private com.baidu.mapapi.map.Marker baiduMarker;
     private com.tencent.tencentmap.mapsdk.maps.model.Marker tencentMarker;
     private org.osmdroid.views.overlay.Marker googleMarker;
@@ -33,7 +33,7 @@ public class Marker {
      * 创建AMAP Marker点
      * @param aMapMarker
      */
-    public Marker(com.amap.api.maps2d.model.Marker aMapMarker) {
+    public Marker(com.amap.api.maps.model.Marker aMapMarker) {
         if(aMapMarker == null) return;
         type = MAP_SOURCE_AMAP;
         latLng = new LatLng(aMapMarker.getPosition().latitude, aMapMarker.getPosition().longitude);
