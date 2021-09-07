@@ -75,7 +75,7 @@ public class AMapFragment extends BaseFragment {
         aMapView.onCreate(savedInstanceState);
 
         aMap = aMapView.getMap();
-        aMap.getUiSettings().setZoomControlsEnabled(true);
+        aMap.getUiSettings().setZoomControlsEnabled(false);
 
         //设置地图类型
         setMapType(com.grain.map.MapView.getCurrentMapType());
