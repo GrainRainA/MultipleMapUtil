@@ -119,6 +119,7 @@ public class AMapFragment extends BaseFragment {
         }
     }
 
+    //定位回调
     private AMapLocationListener locationListener = new AMapLocationListener() {
 
         @Override

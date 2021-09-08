@@ -325,9 +325,9 @@ public class MapView extends RelativeLayout {
 
     /**
      * 添加Marker
-     * @param latLng
-     * @param res
-     * @param rotateAngle
+     * @param latLng 坐标
+     * @param res 资源ID
+     * @param rotateAngle 旋转角度
      * @return 自定义Marker
      */
     public Marker addMarker(LatLng latLng, int res, float rotateAngle) {
@@ -355,8 +355,8 @@ public class MapView extends RelativeLayout {
     /**
      * 添加序号Marker
      *
-     * @param latLng
-     * @param num
+     * @param latLng 坐标
+     * @param num 序号
      * @return
      */
     public Marker addNumberMarker(LatLng latLng, int num) {
@@ -366,9 +366,9 @@ public class MapView extends RelativeLayout {
     /**
      * 添加序号Marker
      *
-     * @param latLng
-     * @param num
-     * @param isSelect
+     * @param latLng 坐标
+     * @param num 序号
+     * @param isSelect 是否选中状态
      * @return
      */
     public Marker addNumberMarker(LatLng latLng, int num, boolean isSelect) {
@@ -469,9 +469,8 @@ public class MapView extends RelativeLayout {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.map_view_framelayout, fragment);
             transaction.commit();
-            L.v("InitMapModule.getActivity() != null");
         } else {
-            L.v("InitMapModule.getActivity() == null");
+            L.v("MapModule: replace fragment error, getActivity() is null");
         }
     }
 

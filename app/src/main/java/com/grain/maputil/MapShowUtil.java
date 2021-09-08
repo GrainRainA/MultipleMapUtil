@@ -10,7 +10,6 @@ import com.grain.map.Listener.MapLoadingFinishedListener;
 import com.grain.map.MapView;
 import com.grain.map.Utils.LatLngCalculationDistance;
 import com.grain.map.View.ShowLocationUtil;
-import com.grain.utils.hint.L;
 
 import androidx.appcompat.app.AppCompatActivity;
 
