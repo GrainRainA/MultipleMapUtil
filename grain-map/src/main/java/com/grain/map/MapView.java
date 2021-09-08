@@ -1,6 +1,7 @@
 package com.grain.map;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.grain.map.Interfaces.SwitchMapSourceListener;
 import com.grain.map.Listener.MapLoadingFinishedListener;
 import com.grain.map.Utils.AMAp.AMapFragment;
 import com.grain.map.Utils.BaiduMap.BaiduMapFragment;
+import com.grain.map.Utils.DrawableUtils;
 import com.grain.map.Utils.GoogleMap.GoogleMapFragment;
 import com.grain.map.Utils.LatLngConvertUtil;
 import com.grain.map.Utils.TencentMap.TencentMapFragment;
@@ -47,21 +49,8 @@ import static com.grain.map.InitMapModule.getActivity;
  */
 public class MapView extends RelativeLayout {
 
-    private View view;
-    private static OnMapClickListener onMapClickListener;
-    private static LocationListener locationListener;
-
-    private static MapLoadingFinishedListener listener;
-    private static MapView mapView;
-
-    /**
-     * 地图类型 卫星图
-     */
+    //地图类型
     public static final int MAP_TYPE_SATELLITE = 1;     //卫星图
-
-    /**
-     * 地图类型 电子地图
-     */
     public static final int MAP_TYPE_NORMAL = 2;        //电子地图
 
     //地图源
@@ -70,13 +59,21 @@ public class MapView extends RelativeLayout {
     public static final int MAP_SOURCE_AMAP = 3;
     public static final int MAP_SOURCE_GOOGLE = 4;
 
+    private View view;
+    private static OnMapClickListener onMapClickListener;
+    private static LocationListener locationListener;
+
+    private static MapLoadingFinishedListener listener;
+    private static MapView mapView;
+
+
     //当前地图源
     private static int currentMapSource = MAP_SOURCE_AMAP;
     //当前地图类型
     private static int currentMapType = MAP_TYPE_SATELLITE;
 
     //初始化中心点
-    private static LatLng initCamearLatLng = new LatLng(23.16556174178367, 113.3408419634118);
+    private static LatLng initCamearLatLng = new LatLng(39.917190478161814, 116.39725613251412);
     //初始化地图级别
     private static int initZoom = 18;
 
@@ -323,14 +320,18 @@ public class MapView extends RelativeLayout {
         return addMarker(latLng, R.drawable.leading_mark, rotateAngle);
     }
 
+    public Marker addMarker(LatLng latLng, int res, float rotateAngle) {
+        return addMarker(latLng, DrawableUtils.drawableToBitmap(res), rotateAngle);
+    }
+
     /**
      * 添加Marker
      * @param latLng 坐标
-     * @param res 资源ID
+     * @param bitmap 显示图标
      * @param rotateAngle 旋转角度
      * @return 自定义Marker
      */
-    public Marker addMarker(LatLng latLng, int res, float rotateAngle) {
+    public Marker addMarker(LatLng latLng, Bitmap bitmap, float rotateAngle) {
         //地图显示坐标系为火星坐标系，如传入的坐标类型为WGS84，则进行转换
         LatLng newLatLng = latLng;
         if (latLng.getType() != null) {
@@ -341,13 +342,13 @@ public class MapView extends RelativeLayout {
 
         switch (currentMapSource) {
             case MAP_SOURCE_AMAP:
-                return new Marker(AMap.addMarker(newLatLng, res, rotateAngle));
+                return new Marker(AMap.addMarker(newLatLng, bitmap, rotateAngle));
             case MAP_SOURCE_TENCENT:
-                return new Marker(TencentMap.addMarker(newLatLng, res, rotateAngle));
+                return new Marker(TencentMap.addMarker(newLatLng, bitmap, rotateAngle));
             case MAP_SOURCE_BAIDU:
-                return new Marker(BaiduMap.addMarker(newLatLng, res, rotateAngle));
+                return new Marker(BaiduMap.addMarker(newLatLng, bitmap, rotateAngle));
             case MAP_SOURCE_GOOGLE:
-                return new Marker(GoogleMap.addMarker(newLatLng, res, rotateAngle));
+                return new Marker(GoogleMap.addMarker(newLatLng, bitmap, rotateAngle));
         }
         return null;
     }

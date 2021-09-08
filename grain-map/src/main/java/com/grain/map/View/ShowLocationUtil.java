@@ -70,7 +70,7 @@ public class ShowLocationUtil {
     private static void showDeviceLocus(MapView map, boolean isShowLocus, float spacing, LatLng latLng, LatLng lastLatLng) {
         if (devicePolylineList == null) devicePolylineList = new ArrayList<>();
         if (isShowLocus) {
-            if (LatLngCalculationDistance.calculateLineDistance(latLng, lastLatLng) > spacing) {
+            if (LatLngCalculationDistance.getDistance(latLng, lastLatLng) > spacing) {
                 devicePolylineList.add(map.addPolyline(Color.GREEN, false, latLng, lastLatLng));
             }
         }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.grain.map.MapView;
+import com.grain.utils.hint.L;
 
 public class MainActivity extends AppCompatActivity {
 
