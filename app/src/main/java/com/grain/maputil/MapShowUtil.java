@@ -1,5 +1,8 @@
 package com.grain.maputil;
 
+import android.graphics.Color;
+
+import com.grain.map.Common.CoordinateSystemType;
 import com.grain.map.Common.MapParameter;
 import com.grain.map.Entity.LatLng;
 import com.grain.map.InitMapModule;
@@ -7,6 +10,7 @@ import com.grain.map.Interfaces.LocationListener;
 import com.grain.map.Listener.MapLoadingFinishedListener;
 import com.grain.map.MapView;
 import com.grain.map.Utils.LatLngCalculationDistance;
+import com.grain.map.Utils.LatLngConvertUtil;
 import com.grain.map.View.ShowLocationUtil;
 import com.grain.utils.hint.L;
 
@@ -37,6 +41,18 @@ public class MapShowUtil {
             @Override
             public void onSuccess() {
                 initMap(mapView);
+
+
+                List<LatLng> latLngs = new ArrayList<>();
+                latLngs.add((new LatLng(39.922245635222545, 116.39215630489747, CoordinateSystemType.WGS84)));
+                latLngs.add((new LatLng(39.92300562476863, 116.40187705461851)));
+                latLngs.add((new LatLng(39.91354956808267, 116.40227580411027)));
+                latLngs.add((new LatLng(39.913452737257145, 116.3931597786972, CoordinateSystemType.WGS84)));
+
+
+                mapView.moveCamera(new LatLng(39.92300562476863, 116.40187705461851), 10);
+                mapView.enlargeMapZoom();
+                mapView.narrowMapZoom();
             }
         });
     }
@@ -56,7 +72,6 @@ public class MapShowUtil {
             @Override
             public void onClick(LatLng latLng) {
 
-//                mapView.addMarker()
             }
         });
 

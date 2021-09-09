@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.amap.api.maps.CameraUpdate;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.grain.map.Common.CoordinateSystemType;
 import com.grain.map.Common.MapParameter;
 import com.grain.map.Entity.LatLng;
@@ -237,18 +239,24 @@ public class MapView extends RelativeLayout {
      * @param zoom   地图级别
      */
     public void moveCamera(LatLng latLng, int zoom) {
+        //地图显示坐标系为火星坐标系，如传入的坐标类型为WGS84，则进行转换
+        LatLng newLatLng = latLng;
+        if (latLng.getType() != null && latLng.getType() == CoordinateSystemType.WGS84) {
+            newLatLng = LatLngConvertUtil.WGS84ToGCJ02(latLng.latitude, latLng.longitude);
+        }
+
         switch (currentMapSource) {
             case MAP_SOURCE_AMAP:
-                AMap.moveCamera(latLng, zoom);
+                AMap.moveCamera(newLatLng, zoom);
                 break;
             case MAP_SOURCE_TENCENT:
-                TencentMap.moveCamera(latLng, zoom);
+                TencentMap.moveCamera(newLatLng, zoom);
                 break;
             case MAP_SOURCE_BAIDU:
-                BaiduMap.moveCamera(latLng, zoom);
+                BaiduMap.moveCamera(newLatLng, zoom);
                 break;
             case MAP_SOURCE_GOOGLE:
-                GoogleMap.moveCamera(latLng, zoom);
+                GoogleMap.moveCamera(newLatLng, zoom);
                 break;
         }
     }
@@ -276,7 +284,7 @@ public class MapView extends RelativeLayout {
     /**
      * 缩小地图
      */
-    public static void narrowMapZoom() {
+    public void narrowMapZoom() {
         switch (currentMapSource) {
             case MAP_SOURCE_AMAP:
                 AMap.narrowMapZoom();
@@ -334,10 +342,8 @@ public class MapView extends RelativeLayout {
     public Marker addMarker(LatLng latLng, Bitmap bitmap, float rotateAngle) {
         //地图显示坐标系为火星坐标系，如传入的坐标类型为WGS84，则进行转换
         LatLng newLatLng = latLng;
-        if (latLng.getType() != null) {
-            if (latLng.getType() == CoordinateSystemType.WGS84) {
-                newLatLng = LatLngConvertUtil.WGS84ToGCJ02(latLng.latitude, latLng.longitude);
-            }
+        if (latLng.getType() != null && latLng.getType() == CoordinateSystemType.WGS84) {
+            newLatLng = LatLngConvertUtil.WGS84ToGCJ02(latLng.latitude, latLng.longitude);
         }
 
         switch (currentMapSource) {
@@ -450,15 +456,29 @@ public class MapView extends RelativeLayout {
      * @return
      */
     public Polyline addPolyline(List<LatLng> latLngList, int color, int width, boolean setDottedLine) {
+
+        if (latLngList == null) return null;
+
+        //地图显示坐标系为火星坐标系，如传入的坐标类型为WGS84，则进行转换
+        List<LatLng> newLatLngList = new ArrayList<>();
+        for (int i = 0; i < latLngList.size(); i++) {
+            LatLng latLng = latLngList.get(i);
+            if (latLng.getType() != null && latLng.getType() == CoordinateSystemType.WGS84) {
+                newLatLngList.add(LatLngConvertUtil.WGS84ToGCJ02(latLng));
+            } else {
+                newLatLngList.add(latLng);
+            }
+        }
+
         switch (currentMapSource) {
             case MAP_SOURCE_AMAP:
-                return new Polyline(AMap.addPolyline(latLngList, color, width, setDottedLine));
+                return new Polyline(AMap.addPolyline(newLatLngList, color, width, setDottedLine));
             case MAP_SOURCE_TENCENT:
-                return new Polyline(TencentMap.addPolyline(latLngList, color, width, setDottedLine));
+                return new Polyline(TencentMap.addPolyline(newLatLngList, color, width, setDottedLine));
             case MAP_SOURCE_BAIDU:
-                return new Polyline(BaiduMap.addPolyline(latLngList, color, width, setDottedLine));
+                return new Polyline(BaiduMap.addPolyline(newLatLngList, color, width, setDottedLine));
             case MAP_SOURCE_GOOGLE:
-                return new Polyline(GoogleMap.addPolyline(latLngList, color, width, setDottedLine));
+                return new Polyline(GoogleMap.addPolyline(newLatLngList, color, width, setDottedLine));
         }
         return null;
     }

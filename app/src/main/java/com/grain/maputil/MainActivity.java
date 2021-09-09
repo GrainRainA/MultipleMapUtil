@@ -34,6 +34,5 @@ public class MainActivity extends AppCompatActivity {
 
         MapView mapView = findViewById(R.id.mapView);
         new MapShowUtil(this, mapView);
-
     }
 }
